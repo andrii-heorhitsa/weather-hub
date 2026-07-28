@@ -29,9 +29,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${roboto.className} ${cormorant.variable}`}>
-      <body>
+      <body className="flex min-h-screen flex-col">
         <Providers>
-          <main className="main-content">{children}</main>
+          <main className="flex flex-1 flex-col">{children}</main>
         </Providers>
       </body>
     </html>
