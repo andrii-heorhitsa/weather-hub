@@ -6,8 +6,8 @@ type SkeletonProps = {
 };
 
 export function Skeleton({
-  width,
-  height,
+  width = "100%",
+  height = "16px",
   circle,
   className = "",
 }: SkeletonProps) {

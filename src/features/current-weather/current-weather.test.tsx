@@ -1,4 +1,3 @@
-// features/current-weather/index.test.tsx
 import { render, screen } from "@testing-library/react";
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { CurrentWeather } from "./index";
@@ -65,9 +64,7 @@ describe("CurrentWeather", () => {
 
     render(<CurrentWeather latitude={48.29} longitude={25.94} />);
 
-    expect(
-      screen.getByText("Не вдалося завантажити погоду"),
-    ).toBeInTheDocument();
+    expect(screen.getByText("Could not load weather")).toBeInTheDocument();
   });
 
   it("calls refetch when retry is clicked after an error", () => {
@@ -77,7 +74,7 @@ describe("CurrentWeather", () => {
     );
 
     render(<CurrentWeather latitude={48.29} longitude={25.94} />);
-    screen.getByRole("button", { name: "Спробувати ще раз" }).click();
+    screen.getByRole("button", { name: "Try again" }).click();
 
     expect(refetch).toHaveBeenCalledTimes(1);
   });

@@ -6,9 +6,7 @@ describe("ErrorMessage", () => {
   it("renders default message when none is passed", () => {
     render(<ErrorMessage />);
 
-    expect(
-      screen.getByText("Не вдалося завантажити погоду"),
-    ).toBeInTheDocument();
+    expect(screen.getByText("Could not load weather")).toBeInTheDocument();
   });
 
   it("renders a custom message when passed", () => {
@@ -27,7 +25,7 @@ describe("ErrorMessage", () => {
     render(<ErrorMessage onRetry={() => {}} />);
 
     expect(
-      screen.getByRole("button", { name: "Спробувати ще раз" }),
+      screen.getByRole("button", { name: "Try again" }),
     ).toBeInTheDocument();
   });
 
@@ -35,7 +33,7 @@ describe("ErrorMessage", () => {
     const onRetry = vi.fn();
     render(<ErrorMessage onRetry={onRetry} />);
 
-    fireEvent.click(screen.getByRole("button", { name: "Спробувати ще раз" }));
+    fireEvent.click(screen.getByRole("button", { name: "Try again" }));
 
     expect(onRetry).toHaveBeenCalledTimes(1);
   });
