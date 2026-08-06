@@ -1,4 +1,4 @@
-import { fetchWeather } from "@/lib/weather-client";
+import { fetchWeather } from "@/lib/client/weather-client";
 import { useQuery } from "@tanstack/react-query";
 
 export function useWeather(latitude?: number, longitude?: number) {
@@ -11,6 +11,6 @@ export function useWeather(latitude?: number, longitude?: number) {
       return fetchWeather({ latitude, longitude });
     },
     enabled: latitude !== undefined && longitude !== undefined,
-    staleTime: 5 * 60 * 1000,
+    staleTime: 1 * 60 * 1000,
   });
 }
