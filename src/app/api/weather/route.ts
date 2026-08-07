@@ -1,4 +1,4 @@
-import { getWeather } from "@/lib/weather-service";
+import { getWeather } from "@/lib/service/weather-service";
 import { NextRequest } from "next/server";
 
 export async function GET(req: NextRequest) {
@@ -24,8 +24,8 @@ export async function GET(req: NextRequest) {
   }
 
   try {
-    const weather_response = await getWeather(lat, lon);
-    return Response.json(weather_response);
+    const weatherResponse = await getWeather(lat, lon);
+    return Response.json(weatherResponse);
   } catch {
     return Response.json({ error: "Failed to fetch weather" }, { status: 500 });
   }
