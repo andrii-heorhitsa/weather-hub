@@ -1,24 +1,18 @@
 "use client";
 
-import { useState } from "react";
 import { CurrentWeather } from "@/features/current-weather";
 import { CitySearch } from "../city-search";
-import { CityResult } from "@/types/cities";
-
-const DEFAULT_CITY: CityResult = {
-  id: 1,
-  name: "Chernivtsi",
-  country: "Ukraine",
-  latitude: 48.29,
-  longitude: 25.94,
-};
+import { useCityStore } from "@/providers/city-store-provider";
+import { CitySync } from "../city-sync/city-sync";
 
 export function WeatherWidget() {
-  const [selectedCity, setSelectedCity] = useState<CityResult>(DEFAULT_CITY);
+  const selectedCity = useCityStore((store) => store.selectedCity);
+  const setSelectedCity = useCityStore((store) => store.setSelectedCity);
 
   return (
     <div className="flex w-full max-w-md flex-col items-center gap-6">
-      <CitySearch onSelect={(city) => setSelectedCity(city)} />
+      <CitySync />
+      <CitySearch onSelect={setSelectedCity} />
 
       <div className="w-full text-center">
         <h1 className="mb-4 text-xl font-bold">
