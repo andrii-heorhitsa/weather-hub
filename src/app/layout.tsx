@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Roboto, Cormorant_Garamond } from "next/font/google";
 import "@/styles/globals.css";
-import Providers from "./providers";
+import Providers from "@/providers/providers";
 
 const roboto = Roboto({
   weight: ["300", "400", "500", "700"],
