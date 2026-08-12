@@ -16,13 +16,9 @@ export function CitySearch({
   const debouncedQuery = useDebounce(query, 400);
   const { data: results = [], isPending } = useCitiesSearch(debouncedQuery);
 
-  // TODO: замінити на useQuery(geocoding) з debouncedQuery
-  // const results: CityResult[] = [];
-  // const isPending = false;
-
   function handleSelect(city: CityResult) {
     onSelect(city);
-    setQuery(city.name);
+    setQuery("");
     setIsOpen(false);
   }
 

@@ -17,7 +17,7 @@ export async function searchCities(name: string): Promise<CityResult[]> {
   const params = new URLSearchParams({
     name,
     count: "10",
-    language: "uk",
+    language: "en",
   });
 
   const response = await fetch(`${BASE_URL}?${params.toString()}`);

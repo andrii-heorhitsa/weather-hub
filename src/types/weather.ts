@@ -25,3 +25,8 @@ export type WeatherInfo = {
   current: CurrentWeather;
   daily: DailyWeatherItem[];
 };
+
+export type CurrentWeatherDomain = {
+  temperature: number;
+  weatherCode: number;
+};
