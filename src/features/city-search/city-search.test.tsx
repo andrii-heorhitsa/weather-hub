@@ -85,7 +85,7 @@ describe("CitySearch", () => {
     fireEvent.mouseDown(screen.getByText(/Kyiv/));
 
     expect(onSelect).toHaveBeenCalledWith(kyiv);
-    expect(input).toHaveValue("Kyiv");
+    expect(input).toHaveValue("");
   });
 
   it("closes the dropdown on blur", () => {

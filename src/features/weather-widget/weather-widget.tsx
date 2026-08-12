@@ -4,6 +4,7 @@ import { CurrentWeather } from "@/features/current-weather";
 import { CitySearch } from "../city-search";
 import { useCityStore } from "@/providers/city-store-provider";
 import { CitySync } from "../city-sync/city-sync";
+import { GeolocationSync } from "../geolocation-sync/geolocation-sync";
 
 export function WeatherWidget() {
   const selectedCity = useCityStore((store) => store.selectedCity);
@@ -12,6 +13,7 @@ export function WeatherWidget() {
   return (
     <div className="flex w-full max-w-md flex-col items-center gap-6">
       <CitySync />
+      <GeolocationSync />
       <CitySearch onSelect={setSelectedCity} />
 
       <div className="w-full text-center">

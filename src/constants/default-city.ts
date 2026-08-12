@@ -2,8 +2,8 @@ import { CityResult } from "@/types/cities";
 
 export const DEFAULT_CITY: CityResult = {
   id: 1,
-  name: "Chernivtsi",
+  name: "Kyiv",
   country: "Ukraine",
-  latitude: 48.29,
-  longitude: 25.94,
+  latitude: 50.4501,
+  longitude: 30.5234,
 };

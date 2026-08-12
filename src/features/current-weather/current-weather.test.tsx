@@ -4,6 +4,10 @@ import { CurrentWeather } from "./index";
 import { useWeather } from "@/hooks/use-weather";
 import type { WeatherInfo } from "@/types/weather";
 
+vi.mock("@/features/clothing-advice/clothing-advice", () => ({
+  ClothingAdvice: () => null,
+}));
+
 vi.mock("@/hooks/use-weather");
 
 const mockUseWeather = vi.mocked(useWeather);
