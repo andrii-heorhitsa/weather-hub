@@ -14,7 +14,6 @@ export default async function Home() {
 
   const city = await getCityFromCookie();
   const queryClient = getQueryClient();
-  console.log(city);
 
   await queryClient.prefetchQuery({
     queryKey: ["weather", city.latitude, city.longitude],

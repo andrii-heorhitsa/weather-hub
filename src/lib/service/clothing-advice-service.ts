@@ -13,15 +13,16 @@ export async function getLLMAdvice(
         Authorization: `Bearer ${process.env.GROQ_API_KEY}`,
       },
       body: JSON.stringify({
-        model: "llama-3.1-8b-instant",
+        model: "openai/gpt-oss-20b",
         messages: [
           {
             role: "user",
             content: `Weather: ${weather.temperature}°C, ${weatherCodeToText(weather.weatherCode)}. Suggest what to wear in one short phrase.`,
           },
         ],
-        max_tokens: 60,
-        temperature: 0.3,
+        max_completion_tokens: 300,
+        temperature: 0.8,
+        reasoning_effort: "low",
       }),
     },
   );

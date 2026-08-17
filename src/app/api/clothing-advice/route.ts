@@ -7,7 +7,8 @@ export async function POST(request: NextRequest) {
   try {
     const advice = await getLLMAdvice(weather);
     return Response.json({ advice });
-  } catch {
+  } catch (error) {
+    console.error("Groq request failed:", error);
     return Response.json({ advice: getRuleBasedAdvice(weather) });
   }
 }
