@@ -81,6 +81,7 @@ export async function getWeather(
     current: CURRENT_PARAMS,
     daily: DAILY_PARAMS,
     timezone: "auto",
+    forecast_days: "7",
   });
 
   const response = await fetch(`${BASE_URL}?${params.toString()}`);
