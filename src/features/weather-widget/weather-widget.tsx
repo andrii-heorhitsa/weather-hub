@@ -17,8 +17,9 @@ export function WeatherWidget() {
       <CitySearch onSelect={setSelectedCity} />
 
       <div className="w-full text-center">
-        <h1 className="mb-4 text-xl font-bold">
-          {selectedCity.name}, {selectedCity.country}
+        <h1 className="font-display text-3xl font-light tracking-wide text-ink">
+          {selectedCity.name}
+          <span className="text-ink-muted">, {selectedCity.country}</span>
         </h1>
 
         <CurrentWeather

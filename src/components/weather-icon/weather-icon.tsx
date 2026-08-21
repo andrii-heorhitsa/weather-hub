@@ -44,10 +44,12 @@ const WEATHER_ICON_MAP: Record<number, LucideIcon> = {
 export function WeatherIcon({
   code,
   className,
+  style,
 }: {
   code: number;
   className?: string;
+  style?: React.CSSProperties;
 }) {
   const Icon = WEATHER_ICON_MAP[code] ?? Cloud;
-  return <Icon className={className} aria-hidden="true" />;
+  return <Icon className={className} style={style} aria-hidden="true" />;
 }
