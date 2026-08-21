@@ -14,6 +14,12 @@ vi.mock("@/features/clothing-advice/clothing-advice", () => ({
 
 vi.mock("@/hooks/use-weather");
 
+vi.mock("@/providers/city-store-provider", () => ({
+  useCityStore: (
+    selector: (state: { selectedCity: { id: number } }) => unknown,
+  ) => selector({ selectedCity: { id: 1 } }),
+}));
+
 const mockUseWeather = vi.mocked(useWeather);
 
 const mockWeatherData: WeatherInfo = {
