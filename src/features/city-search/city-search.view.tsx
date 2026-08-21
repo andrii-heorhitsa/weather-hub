@@ -26,18 +26,22 @@ export default function CitySearchView({
         value={query}
         onChange={(e) => onQueryChange(e.target.value)}
         onBlur={onBlur}
-        placeholder="City search..."
-        className="w-full rounded-md border border-zinc-300 px-3 py-2 text-sm outline-none focus:border-zinc-500 dark:border-zinc-700 dark:bg-zinc-900"
+        placeholder="Search for a city…"
+        className="w-full border-b border-hairline bg-transparent px-1 py-2 text-center font-display text-lg text-ink outline-none placeholder:text-ink-muted focus:border-ink"
       />
 
       {isOpen && (
-        <ul className="absolute z-10 mt-1 w-full rounded-md border border-zinc-200 bg-white shadow-md dark:border-zinc-700 dark:bg-zinc-900">
+        <ul className="absolute z-10 mt-1 w-full divide-y divide-hairline border-b border-hairline bg-paper font-display text-base">
           {isPending && (
-            <li className="px-3 py-2 text-sm text-zinc-500">Search...</li>
+            <li className="px-1 py-3 text-center text-sm text-ink-muted">
+              Searching…
+            </li>
           )}
 
           {!isPending && results.length === 0 && (
-            <li className="px-3 py-2 text-sm text-zinc-500">Nothing found</li>
+            <li className="px-1 py-3 text-center text-sm text-ink-muted">
+              Nothing found
+            </li>
           )}
 
           {results.map((city) => (
@@ -45,10 +49,12 @@ export default function CitySearchView({
               <button
                 type="button"
                 onMouseDown={() => onSelect(city)}
-                className="w-full px-3 py-2 text-left text-sm hover:bg-zinc-100 dark:hover:bg-zinc-800"
+                className="w-full px-1 py-3 text-left text-ink transition-colors hover:text-ink-muted"
               >
                 {city.name}
-                {city.admin1 ? `, ${city.admin1}` : ""}, {city.country}
+                <span className="text-ink-muted">
+                  {city.admin1 ? `, ${city.admin1}` : ""}, {city.country}
+                </span>
               </button>
             </li>
           ))}
