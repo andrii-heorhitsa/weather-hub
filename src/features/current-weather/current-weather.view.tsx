@@ -9,17 +9,25 @@ import { weatherCodeToText } from "@/lib/weather/weather-code-to-text";
 import { weatherCodeToAccent } from "@/lib/weather/weather-code-to-accent";
 import { WeatherIcon } from "@/components/weather-icon/weather-icon";
 import { formatDate } from "@/lib/format-date";
+import { useCityStore } from "@/providers/city-store-provider";
+
+gsap.registerPlugin(useGSAP);
 
 export default function CurrentWeatherView({
   weatherData,
 }: {
   weatherData: WeatherInfo;
 }) {
+  const cityId = useCityStore((store) => store.selectedCity.id);
   const containerRef = useRef<HTMLDivElement>(null);
   const accent = weatherCodeToAccent(weatherData.current.weatherCode);
+  const tempRef = useRef<HTMLSpanElement>(null);
 
   useGSAP(
     () => {
+      const targetTemp = weatherData.current.temperature;
+      const tempObj = { value: 0 };
+
       const tl = gsap.timeline({
         defaults: { ease: "power3.out", duration: 0.6 },
       });
@@ -29,6 +37,20 @@ export default function CurrentWeatherView({
         y: 16,
         scale: 0.98,
       })
+        .to(
+          tempObj,
+          {
+            value: targetTemp,
+            duration: 0.9,
+            ease: "power2.out",
+            onUpdate: () => {
+              if (tempRef.current) {
+                tempRef.current.textContent = `${Math.round(tempObj.value)}°`;
+              }
+            },
+          },
+          "<",
+        )
         .from(
           ".js-forecast-item",
           {
@@ -47,7 +69,7 @@ export default function CurrentWeatherView({
           "-=0.2",
         );
     },
-    { scope: containerRef, dependencies: [weatherData] },
+    { scope: containerRef, dependencies: [cityId] },
   );
 
   return (
@@ -56,10 +78,11 @@ export default function CurrentWeatherView({
       <div className="js-hero flex flex-col items-center">
         <div className="flex items-center gap-3">
           <span
+            ref={tempRef}
             className="font-display text-7xl font-light leading-none"
             style={{ color: accent }}
           >
-            {weatherData.current.temperature}°
+            0°
           </span>
           <WeatherIcon
             code={weatherData.current.weatherCode}
