@@ -38,36 +38,38 @@ describe("CitySearch", () => {
 
   it("renders the input", () => {
     render(<CitySearch onSelect={vi.fn()} />);
-    expect(screen.getByPlaceholderText("City search...")).toBeInTheDocument();
+    expect(
+      screen.getByPlaceholderText("Search for a city…"),
+    ).toBeInTheDocument();
   });
 
   it("shows loading state while pending", () => {
     mockCitiesResult({ isPending: true });
     render(<CitySearch onSelect={vi.fn()} />);
 
-    fireEvent.change(screen.getByPlaceholderText("City search..."), {
+    fireEvent.change(screen.getByPlaceholderText("Search for a city…"), {
       target: { value: "Kyi" },
     });
 
-    expect(screen.getByText("Search...")).toBeInTheDocument();
+    expect(screen.getByText("Searching…")).toBeInTheDocument();
   });
 
   it("shows results returned by the hook", () => {
     mockCitiesResult({ data: [kyiv] });
     render(<CitySearch onSelect={vi.fn()} />);
 
-    fireEvent.change(screen.getByPlaceholderText("City search..."), {
+    fireEvent.change(screen.getByPlaceholderText("Search for a city…"), {
       target: { value: "Kyi" },
     });
 
-    expect(screen.getByText(/Kyiv/)).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /kyiv/i })).toBeInTheDocument();
   });
 
   it('shows "Nothing found" when there are no results', () => {
     mockCitiesResult({ data: [] });
     render(<CitySearch onSelect={vi.fn()} />);
 
-    fireEvent.change(screen.getByPlaceholderText("City search..."), {
+    fireEvent.change(screen.getByPlaceholderText("Search for a city…"), {
       target: { value: "Kyi" },
     });
 
@@ -79,10 +81,10 @@ describe("CitySearch", () => {
     const onSelect = vi.fn();
     render(<CitySearch onSelect={onSelect} />);
 
-    const input = screen.getByPlaceholderText("City search...");
+    const input = screen.getByPlaceholderText("Search for a city…");
     fireEvent.change(input, { target: { value: "Kyi" } });
 
-    fireEvent.mouseDown(screen.getByText(/Kyiv/));
+    fireEvent.mouseDown(screen.getByRole("button", { name: /kyiv/i }));
 
     expect(onSelect).toHaveBeenCalledWith(kyiv);
     expect(input).toHaveValue("");
@@ -92,12 +94,14 @@ describe("CitySearch", () => {
     mockCitiesResult({ data: [kyiv] });
     render(<CitySearch onSelect={vi.fn()} />);
 
-    const input = screen.getByPlaceholderText("City search...");
+    const input = screen.getByPlaceholderText("Search for a city…");
     fireEvent.change(input, { target: { value: "Kyi" } });
-    expect(screen.getByText(/Kyiv/)).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /kyiv/i })).toBeInTheDocument();
 
     fireEvent.blur(input);
 
-    expect(screen.queryByText(/Kyiv/)).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole("button", { name: /kyiv/i }),
+    ).not.toBeInTheDocument();
   });
 });
