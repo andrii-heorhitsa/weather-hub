@@ -82,7 +82,7 @@ export default function CurrentWeatherView({
             className="font-display text-7xl font-light leading-none"
             style={{ color: accent }}
           >
-            0°
+            {weatherData.current.temperature}°
           </span>
           <WeatherIcon
             code={weatherData.current.weatherCode}
