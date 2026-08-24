@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { WeatherInfo } from "@/types/weather";
@@ -9,7 +9,6 @@ import { weatherCodeToText } from "@/lib/weather/weather-code-to-text";
 import { weatherCodeToAccent } from "@/lib/weather/weather-code-to-accent";
 import { WeatherIcon } from "@/components/weather-icon/weather-icon";
 import { formatDate } from "@/lib/format-date";
-import { useCityStore } from "@/providers/city-store-provider";
 
 gsap.registerPlugin(useGSAP);
 
@@ -18,25 +17,30 @@ export default function CurrentWeatherView({
 }: {
   weatherData: WeatherInfo;
 }) {
-  const cityId = useCityStore((store) => store.selectedCity.id);
   const containerRef = useRef<HTMLDivElement>(null);
   const accent = weatherCodeToAccent(weatherData.current.weatherCode);
-  const tempRef = useRef<HTMLSpanElement>(null);
+
+  const [displayTemp, setDisplayTemp] = useState(
+    weatherData.current.temperature,
+  );
+  const displayTempRef = useRef(displayTemp);
+  const isFirstRun = useRef(true);
 
   useGSAP(
     () => {
+      if (isFirstRun.current) {
+        isFirstRun.current = false;
+        return;
+      }
+
       const targetTemp = weatherData.current.temperature;
-      const tempObj = { value: 0 };
+      const tempObj = { value: displayTempRef.current };
 
       const tl = gsap.timeline({
         defaults: { ease: "power3.out", duration: 0.6 },
       });
 
-      tl.from(".js-hero", {
-        opacity: 0,
-        y: 16,
-        scale: 0.98,
-      })
+      tl.from(".js-hero", { opacity: 0, y: 16, scale: 0.98 })
         .to(
           tempObj,
           {
@@ -44,32 +48,27 @@ export default function CurrentWeatherView({
             duration: 0.9,
             ease: "power2.out",
             onUpdate: () => {
-              if (tempRef.current) {
-                tempRef.current.textContent = `${Math.round(tempObj.value)}°`;
-              }
+              const rounded = Math.round(tempObj.value);
+              setDisplayTemp(rounded);
+              displayTempRef.current = rounded;
             },
           },
           "<",
         )
         .from(
           ".js-forecast-item",
-          {
-            opacity: 0,
-            y: 10,
-            stagger: 0.05,
-          },
+          { opacity: 0, y: 10, stagger: 0.05 },
           "-=0.3",
         )
-        .from(
-          ".js-clothing",
-          {
-            opacity: 0,
-            y: 12,
-          },
-          "-=0.2",
-        );
+        .from(".js-clothing", { opacity: 0, y: 12 }, "-=0.2");
     },
-    { scope: containerRef, dependencies: [cityId] },
+    {
+      scope: containerRef,
+      dependencies: [
+        weatherData.current.temperature,
+        weatherData.current.weatherCode,
+      ],
+    },
   );
 
   return (
@@ -78,11 +77,10 @@ export default function CurrentWeatherView({
       <div className="js-hero flex flex-col items-center">
         <div className="flex items-center gap-3">
           <span
-            ref={tempRef}
             className="font-display text-7xl font-light leading-none"
             style={{ color: accent }}
           >
-            {weatherData.current.temperature}°
+            {displayTemp}°
           </span>
           <WeatherIcon
             code={weatherData.current.weatherCode}
