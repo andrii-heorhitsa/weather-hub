@@ -1,5 +1,5 @@
 import { fetchWeather } from "@/lib/client/weather-client";
-import { useQuery } from "@tanstack/react-query";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 
 export function useWeather(latitude?: number, longitude?: number) {
   return useQuery({
@@ -12,5 +12,6 @@ export function useWeather(latitude?: number, longitude?: number) {
     },
     enabled: latitude !== undefined && longitude !== undefined,
     staleTime: 1 * 60 * 1000,
+    placeholderData: keepPreviousData,
   });
 }
