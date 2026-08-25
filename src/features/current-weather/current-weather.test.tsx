@@ -10,7 +10,7 @@ vi.mock("@/store/unit-store", () => ({
 }));
 
 vi.mock("@/hooks/use-has-hydrated", () => ({
-  useHasHydrated: () => true,
+  default: () => true,
 }));
 
 vi.mock("@gsap/react", () => ({
