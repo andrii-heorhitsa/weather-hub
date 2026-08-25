@@ -108,15 +108,18 @@ export default function CurrentWeatherView({
       </div>
 
       {/* Humidity / Wind Details */}
-      <div className="js-details flex w-full items-center justify-center gap-8 border-t py-4">
-        <div className="flex items-center gap-2 text-sm text-ink-muted">
-          <Droplets className="h-4 w-4" aria-hidden="true" />
-          <span>{weatherData.current.humidity}% humidity</span>
+      <div className="js-details flex w-full flex-col items-center justify-center gap-4 border-t py-4 sm:flex-row sm:gap-8">
+        <div className="flex items-center gap-6 sm:gap-8">
+          <div className="flex items-center gap-2 text-sm text-ink-muted">
+            <Droplets className="h-4 w-4" aria-hidden="true" />
+            <span>{weatherData.current.humidity}% humidity</span>
+          </div>
+          <div className="flex items-center gap-2 text-sm text-ink-muted">
+            <Wind className="h-4 w-4" aria-hidden="true" />
+            <span>{weatherData.current.windSpeed} km/h</span>
+          </div>
         </div>
-        <div className="flex items-center gap-2 text-sm text-ink-muted">
-          <Wind className="h-4 w-4" aria-hidden="true" />
-          <span>{weatherData.current.windSpeed} km/h</span>
-        </div>
+
         <UnitToggle />
       </div>
 

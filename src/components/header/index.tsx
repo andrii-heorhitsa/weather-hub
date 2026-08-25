@@ -10,9 +10,9 @@ export async function Header() {
         {headerContent?.siteTitle ?? "Weather Hub"}
       </h1>
       {headerContent?.tagline && (
-        <h4 className="mt-1 text-sm tracking-wide text-ink-muted uppercase">
+        <p className="mt-1 text-sm tracking-wide text-ink-muted uppercase">
           {headerContent.tagline}
-        </h4>
+        </p>
       )}
       {/* <div className="absolute right-6 top-5">
         <UnitToggle />
