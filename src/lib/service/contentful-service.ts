@@ -17,7 +17,7 @@ async function fetchContentfulEntries<TDto>(
   });
 
   const result = await fetch(`${BASE_URL}?${params.toString()}`, {
-    next: { revalidate: 0 },
+    next: { revalidate: 3600 },
   });
 
   if (!result.ok) {

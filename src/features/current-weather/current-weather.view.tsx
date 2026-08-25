@@ -10,6 +10,9 @@ import { weatherCodeToAccent } from "@/lib/weather/weather-code-to-accent";
 import { WeatherIcon } from "@/components/weather-icon/weather-icon";
 import { formatDate } from "@/lib/format-date";
 import { Droplets, Wind } from "lucide-react";
+import { useUnitStore } from "@/store/unit-store";
+import { formatTemperature } from "@/lib/weather/convert-temperature";
+import { UnitToggle } from "@/components/unit-toggle";
 
 gsap.registerPlugin(useGSAP);
 
@@ -18,14 +21,16 @@ export default function CurrentWeatherView({
 }: {
   weatherData: WeatherInfo;
 }) {
+  const unit = useUnitStore((s) => s.unit);
   const containerRef = useRef<HTMLDivElement>(null);
   const accent = weatherCodeToAccent(weatherData.current.weatherCode);
 
-  const [displayTemp, setDisplayTemp] = useState(
+  const [displayTempCelsius, setDisplayTempCelsius] = useState(
     weatherData.current.temperature,
   );
-  const displayTempRef = useRef(displayTemp);
+  const displayTempRef = useRef(displayTempCelsius);
   const isFirstRun = useRef(true);
+  const displayTemp = formatTemperature(displayTempCelsius, unit);
 
   useGSAP(
     () => {
@@ -50,7 +55,7 @@ export default function CurrentWeatherView({
             ease: "power2.out",
             onUpdate: () => {
               const rounded = Math.round(tempObj.value);
-              setDisplayTemp(rounded);
+              setDisplayTempCelsius(rounded);
               displayTempRef.current = rounded;
             },
           },
@@ -82,7 +87,7 @@ export default function CurrentWeatherView({
             className="font-display text-7xl font-light leading-none"
             style={{ color: accent }}
           >
-            {displayTemp}°C
+            {displayTemp}°{unit}
           </span>
           <WeatherIcon
             code={weatherData.current.weatherCode}
@@ -96,7 +101,9 @@ export default function CurrentWeatherView({
           {weatherCodeToText(weatherData.current.weatherCode)}
         </p>
         <p className="mt-1 text-sm text-ink-muted">
-          Feels like {weatherData.current.apparentTemperature}°C
+          Feels like{" "}
+          {formatTemperature(weatherData.current.apparentTemperature, unit)}°
+          {unit}
         </p>
       </div>
 
@@ -110,14 +117,17 @@ export default function CurrentWeatherView({
           <Wind className="h-4 w-4" aria-hidden="true" />
           <span>{weatherData.current.windSpeed} km/h</span>
         </div>
+        <UnitToggle />
       </div>
 
       {/* Daily Forecast List */}
-      <ul className="w-full divide-y divide-hairline border-t border-b border-hairline">
-        {weatherData.daily.map((day) => (
+      <ul className="w-full divide-y divide-hairline">
+        {weatherData.daily.map((day, index) => (
           <li
             key={day.date}
-            className="js-forecast-item flex items-center justify-between gap-4 py-3"
+            className={`js-forecast-item flex items-center justify-between gap-4 py-3 ${
+              index === 0 ? "border-t border-hairline" : ""
+            } ${index === weatherData.daily.length - 1 ? "border-b border-hairline" : ""}`}
           >
             <span className="w-20 text-sm text-ink-muted">
               {formatDate(day.date)}
@@ -134,8 +144,10 @@ export default function CurrentWeatherView({
             </span>
 
             <span className="text-sm text-ink">
-              {day.maxTemperature}°{" "}
-              <span className="text-ink-muted">/ {day.minTemperature}°</span>
+              {formatTemperature(day.maxTemperature, unit)}°{" "}
+              <span className="text-ink-muted">
+                / {formatTemperature(day.minTemperature, unit)}°
+              </span>
             </span>
           </li>
         ))}

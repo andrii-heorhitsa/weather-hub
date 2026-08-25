@@ -1,4 +1,5 @@
 import { getHeaderContent } from "@/lib/service/contentful-service";
+import { UnitToggle } from "../unit-toggle";
 
 export async function Header() {
   const headerContent = await getHeaderContent();
@@ -13,6 +14,9 @@ export async function Header() {
           {headerContent.tagline}
         </h4>
       )}
+      {/* <div className="absolute right-6 top-5">
+        <UnitToggle />
+      </div> */}
     </header>
   );
 }
