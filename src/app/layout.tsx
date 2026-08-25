@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Roboto, Cormorant_Garamond } from "next/font/google";
 import "@/styles/globals.css";
 import Providers from "@/providers/providers";
+import { Header } from "@/components/header";
+import { Footer } from "@/components/footer";
 
 const roboto = Roboto({
   weight: ["300", "400", "500", "700"],
@@ -29,10 +31,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${roboto.className} ${cormorant.variable}`}>
-      <body className="flex min-h-screen flex-col">
+      <body className="flex min-h-screen flex-col font-sans">
+        <Header />
         <Providers>
           <main className="flex flex-1 flex-col">{children}</main>
         </Providers>
+        <Footer />
       </body>
     </html>
   );

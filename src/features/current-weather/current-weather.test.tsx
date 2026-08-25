@@ -4,11 +4,30 @@ import { CurrentWeather } from "./index";
 import { useWeather } from "@/hooks/use-weather";
 import type { WeatherInfo } from "@/types/weather";
 
+vi.mock("@/store/unit-store", () => ({
+  useUnitStore: (selector: (state: { unit: string }) => unknown) =>
+    selector({ unit: "C" }),
+}));
+
+vi.mock("@/hooks/use-has-hydrated", () => ({
+  default: () => true,
+}));
+
+vi.mock("@gsap/react", () => ({
+  useGSAP: vi.fn(),
+}));
+
 vi.mock("@/features/clothing-advice/clothing-advice", () => ({
   ClothingAdvice: () => null,
 }));
 
 vi.mock("@/hooks/use-weather");
+
+vi.mock("@/providers/city-store-provider", () => ({
+  useCityStore: (
+    selector: (state: { selectedCity: { id: number } }) => unknown,
+  ) => selector({ selectedCity: { id: 1 } }),
+}));
 
 const mockUseWeather = vi.mocked(useWeather);
 

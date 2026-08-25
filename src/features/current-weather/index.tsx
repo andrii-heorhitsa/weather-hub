@@ -12,7 +12,10 @@ export function CurrentWeather({
   latitude: number;
   longitude: number;
 }) {
-  const { data, isPending, isError, refetch } = useWeather(latitude, longitude);
+  const { data, isPending, isError, isFetching, refetch } = useWeather(
+    latitude,
+    longitude,
+  );
 
   if (isPending) {
     return <CurrentWeatherSkeleton />;
@@ -23,7 +26,11 @@ export function CurrentWeather({
   }
 
   return (
-    <div>
+    <div
+      className={
+        isFetching ? "opacity-60 transition-opacity" : "transition-opacity"
+      }
+    >
       <CurrentWeatherView weatherData={data} />
     </div>
   );
