@@ -11,7 +11,7 @@ export function useWeather(latitude?: number, longitude?: number) {
       return fetchWeather({ latitude, longitude });
     },
     enabled: latitude !== undefined && longitude !== undefined,
-    staleTime: 1 * 60 * 1000,
+    staleTime: 15 * 60 * 1000,
     placeholderData: keepPreviousData,
   });
 }

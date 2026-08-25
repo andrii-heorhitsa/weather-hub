@@ -4,6 +4,15 @@ import { CurrentWeather } from "./index";
 import { useWeather } from "@/hooks/use-weather";
 import type { WeatherInfo } from "@/types/weather";
 
+vi.mock("@/store/unit-store", () => ({
+  useUnitStore: (selector: (state: { unit: string }) => unknown) =>
+    selector({ unit: "C" }),
+}));
+
+vi.mock("@/hooks/use-has-hydrated", () => ({
+  useHasHydrated: () => true,
+}));
+
 vi.mock("@gsap/react", () => ({
   useGSAP: vi.fn(),
 }));
@@ -100,6 +109,6 @@ describe("CurrentWeather", () => {
 
     render(<CurrentWeather latitude={48.29} longitude={25.94} />);
 
-    expect(screen.getByText("21°")).toBeInTheDocument();
+    expect(screen.getByText("21°C")).toBeInTheDocument();
   });
 });
