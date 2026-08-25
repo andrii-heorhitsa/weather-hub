@@ -9,6 +9,7 @@ import { weatherCodeToText } from "@/lib/weather/weather-code-to-text";
 import { weatherCodeToAccent } from "@/lib/weather/weather-code-to-accent";
 import { WeatherIcon } from "@/components/weather-icon/weather-icon";
 import { formatDate } from "@/lib/format-date";
+import { Droplets, Wind } from "lucide-react";
 
 gsap.registerPlugin(useGSAP);
 
@@ -55,6 +56,7 @@ export default function CurrentWeatherView({
           },
           "<",
         )
+        .from(".js-details", { opacity: 0, y: 10 }, "-=0.4")
         .from(
           ".js-forecast-item",
           { opacity: 0, y: 10, stagger: 0.05 },
@@ -80,7 +82,7 @@ export default function CurrentWeatherView({
             className="font-display text-7xl font-light leading-none"
             style={{ color: accent }}
           >
-            {displayTemp}°
+            {displayTemp}°C
           </span>
           <WeatherIcon
             code={weatherData.current.weatherCode}
@@ -93,6 +95,21 @@ export default function CurrentWeatherView({
         <p className="mt-2 text-sm tracking-wide text-ink-muted uppercase">
           {weatherCodeToText(weatherData.current.weatherCode)}
         </p>
+        <p className="mt-1 text-sm text-ink-muted">
+          Feels like {weatherData.current.apparentTemperature}°C
+        </p>
+      </div>
+
+      {/* Humidity / Wind Details */}
+      <div className="js-details flex w-full items-center justify-center gap-8 border-t py-4">
+        <div className="flex items-center gap-2 text-sm text-ink-muted">
+          <Droplets className="h-4 w-4" aria-hidden="true" />
+          <span>{weatherData.current.humidity}% humidity</span>
+        </div>
+        <div className="flex items-center gap-2 text-sm text-ink-muted">
+          <Wind className="h-4 w-4" aria-hidden="true" />
+          <span>{weatherData.current.windSpeed} km/h</span>
+        </div>
       </div>
 
       {/* Daily Forecast List */}
