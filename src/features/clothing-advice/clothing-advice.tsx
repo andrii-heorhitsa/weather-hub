@@ -16,7 +16,7 @@ export function ClothingAdvice({ weather }: { weather: CurrentWeatherDomain }) {
         )}
 
         <p className="text-sm tracking-wide text-ink-muted uppercase">
-          Clothing advice for today:
+          Clothing advice for this moment:
         </p>
       </div>
 
