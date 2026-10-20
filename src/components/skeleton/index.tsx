@@ -19,7 +19,7 @@ export function Skeleton({
   return (
     <div
       style={style}
-      className={`animate-pulse bg-zinc-200 dark:bg-zinc-800 ${circle ? "rounded-full" : "rounded-md"} ${className}`}
+      className={`animate-pulse bg-skeleton ${circle ? "rounded-full" : "rounded-md"} ${className}`}
     />
   );
 }

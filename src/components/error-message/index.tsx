@@ -8,7 +8,7 @@ export function ErrorMessage({
   onRetry,
 }: ErrorMessageProps) {
   return (
-    <div className="flex flex-col items-center gap-2 text-red-600 dark:text-red-400">
+    <div className="flex flex-col items-center gap-2 text-danger">
       <p>{message}</p>
       {onRetry && (
         <button onClick={onRetry} className="text-sm underline">

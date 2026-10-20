@@ -39,4 +39,18 @@ describe("Header", () => {
 
     expect(screen.queryByRole("heading", { level: 4 })).not.toBeInTheDocument();
   });
+
+  it("renders the theme toggle with the current theme pressed", async () => {
+    vi.mocked(getHeaderContent).mockResolvedValue(null);
+
+    render(await Header({ theme: "dark" }));
+
+    expect(
+      screen.getByRole("group", { name: "Color theme" }),
+    ).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Dark theme" })).toHaveAttribute(
+      "aria-pressed",
+      "true",
+    );
+  });
 });
