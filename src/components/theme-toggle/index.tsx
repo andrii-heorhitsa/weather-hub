@@ -51,7 +51,7 @@ export function ThemeToggle({
             aria-label={label}
             aria-pressed={isActive}
             onClick={() => handleSelect(value)}
-            className={`cursor-pointer rounded-full p-1.5 transition-colors hover:text-ink ${
+            className={`rounded-full p-1.5 transition-colors hover:text-ink ${
               isActive ? "bg-ink/10 text-ink" : "text-ink-muted"
             }`}
           >

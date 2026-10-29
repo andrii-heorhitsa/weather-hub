@@ -11,7 +11,7 @@
   --canvas: #fafafa;
   --surface: #ffffff;
   --skeleton: #e4e4e7;
-  --danger: #dc2626;
+  --danger: #b91c1c;
 
   --accent-sun: #c98a2b;
   --accent-cloud: #8a8f7d;
@@ -83,4 +83,11 @@
 body {
   background: var(--paper);
   color: var(--ink);
+}
+
+@layer base {
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
 }
