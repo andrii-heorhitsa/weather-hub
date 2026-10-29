@@ -22,6 +22,14 @@ describe("ErrorPage", () => {
     ).toBeInTheDocument();
   });
 
+  it("moves focus to the heading after render", () => {
+    render(<ErrorPage error={new Error("boom")} unstable_retry={vi.fn()} />);
+
+    expect(
+      screen.getByRole("heading", { name: "Something went wrong" }),
+    ).toHaveFocus();
+  });
+
   it("calls unstable_retry when the retry button is clicked", () => {
     const retry = vi.fn();
     render(<ErrorPage error={new Error("boom")} unstable_retry={retry} />);
