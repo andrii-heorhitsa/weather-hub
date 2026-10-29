@@ -43,6 +43,14 @@ export default function CurrentWeatherView({
       }
 
       const targetTemp = weatherData.current.temperature;
+
+      // Skip the entrance motion for reduced-motion users, but still show the new value
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        displayTempRef.current = targetTemp;
+        setDisplayTempCelsius(targetTemp);
+        return;
+      }
+
       const tempObj = { value: displayTempRef.current };
 
       const tl = gsap.timeline({
@@ -81,8 +89,8 @@ export default function CurrentWeatherView({
     },
   );
 
-  // Idle icon animation: revertOnUpdate kills the previous endless tween when
-  // the condition changes, matchMedia skips it for reduced-motion users
+  // Icon animation: revertOnUpdate kills the previous tween when the
+  // condition changes, matchMedia skips it for reduced-motion users
   useGSAP(
     () => {
       const mm = gsap.matchMedia();
