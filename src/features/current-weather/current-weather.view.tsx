@@ -7,6 +7,8 @@ import { WeatherInfo } from "@/types/weather";
 import { ClothingAdvice } from "../clothing-advice/clothing-advice";
 import { weatherCodeToText } from "@/lib/weather/weather-code-to-text";
 import { weatherCodeToAccent } from "@/lib/weather/weather-code-to-accent";
+import { weatherCodeToCondition } from "@/lib/weather/weather-code-to-condition";
+import { ICON_ANIMATIONS } from "./weather-icon-animations";
 import { WeatherIcon } from "@/components/weather-icon/weather-icon";
 import { formatDate } from "@/lib/format-date";
 import { Droplets, Wind } from "lucide-react";
@@ -24,6 +26,7 @@ export default function CurrentWeatherView({
   const unit = useUnitStore((s) => s.unit);
   const containerRef = useRef<HTMLDivElement>(null);
   const accent = weatherCodeToAccent(weatherData.current.weatherCode);
+  const condition = weatherCodeToCondition(weatherData.current.weatherCode);
 
   const [displayTempCelsius, setDisplayTempCelsius] = useState(
     weatherData.current.temperature,
@@ -78,6 +81,18 @@ export default function CurrentWeatherView({
     },
   );
 
+  // Idle icon animation: revertOnUpdate kills the previous endless tween when
+  // the condition changes, matchMedia skips it for reduced-motion users
+  useGSAP(
+    () => {
+      const mm = gsap.matchMedia();
+      mm.add("(prefers-reduced-motion: no-preference)", () => {
+        ICON_ANIMATIONS[condition](".js-weather-icon");
+      });
+    },
+    { scope: containerRef, dependencies: [condition], revertOnUpdate: true },
+  );
+
   return (
     <div ref={containerRef} className="mt-8 flex flex-col items-center gap-10">
       {/* Hero Temperature Block */}
@@ -89,13 +104,15 @@ export default function CurrentWeatherView({
           >
             {displayTemp}°{unit}
           </span>
-          <WeatherIcon
-            code={weatherData.current.weatherCode}
-            className="h-14 w-14 shrink-0"
-            style={{
-              color: weatherCodeToAccent(weatherData.current.weatherCode),
-            }}
-          />
+          <span className="js-weather-icon inline-flex shrink-0">
+            <WeatherIcon
+              code={weatherData.current.weatherCode}
+              className="h-14 w-14 shrink-0"
+              style={{
+                color: weatherCodeToAccent(weatherData.current.weatherCode),
+              }}
+            />
+          </span>
         </div>
         <p className="mt-2 text-sm tracking-wide text-ink-muted uppercase">
           {weatherCodeToText(weatherData.current.weatherCode)}
