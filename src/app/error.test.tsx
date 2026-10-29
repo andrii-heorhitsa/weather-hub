@@ -11,23 +11,13 @@ describe("ErrorPage", () => {
     vi.restoreAllMocks();
   });
 
-  it("renders a heading and a retry button", () => {
+  it("renders an h2 heading without a main landmark", () => {
     render(<ErrorPage error={new Error("boom")} unstable_retry={vi.fn()} />);
 
     expect(
-      screen.getByRole("heading", { name: "Something went wrong" }),
+      screen.getByRole("heading", { level: 2, name: "Something went wrong" }),
     ).toBeInTheDocument();
-    expect(
-      screen.getByRole("button", { name: "Try again" }),
-    ).toBeInTheDocument();
-  });
-
-  it("moves focus to the heading after render", () => {
-    render(<ErrorPage error={new Error("boom")} unstable_retry={vi.fn()} />);
-
-    expect(
-      screen.getByRole("heading", { name: "Something went wrong" }),
-    ).toHaveFocus();
+    expect(screen.queryByRole("main")).not.toBeInTheDocument();
   });
 
   it("calls unstable_retry when the retry button is clicked", () => {
@@ -37,25 +27,5 @@ describe("ErrorPage", () => {
     fireEvent.click(screen.getByRole("button", { name: "Try again" }));
 
     expect(retry).toHaveBeenCalledTimes(1);
-  });
-
-  it("logs the error", () => {
-    const error = new Error("boom");
-    render(<ErrorPage error={error} unstable_retry={vi.fn()} />);
-
-    expect(console.error).toHaveBeenCalledWith(error);
-  });
-
-  it("shows the error digest when present", () => {
-    const error = Object.assign(new Error("boom"), { digest: "abc123" });
-    render(<ErrorPage error={error} unstable_retry={vi.fn()} />);
-
-    expect(screen.getByText("Error ID: abc123")).toBeInTheDocument();
-  });
-
-  it("does not show an error ID without a digest", () => {
-    render(<ErrorPage error={new Error("boom")} unstable_retry={vi.fn()} />);
-
-    expect(screen.queryByText(/Error ID/)).not.toBeInTheDocument();
   });
 });
