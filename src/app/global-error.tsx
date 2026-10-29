@@ -19,7 +19,7 @@ export default function GlobalError({
         <ErrorFallback
           error={error}
           onRetry={() => unstable_retry()}
-          title="Weather Hub — Error"
+          title="Error | Weather Hub"
           heading="Weather Hub is temporarily unavailable"
           message="Something went wrong. Please try again."
           headingLevel="h1"
