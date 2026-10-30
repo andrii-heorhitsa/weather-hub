@@ -1,9 +1,10 @@
 import { getRuleBasedAdvice } from "@/lib/clothing-advice/get-rule-based-advice";
 import { getLLMAdvice } from "@/lib/service/clothing-advice-service";
+import { CurrentWeatherDomain } from "@/types/weather";
 import { NextRequest } from "next/server";
 
 export async function POST(request: NextRequest) {
-  const weather = await request.json();
+  const weather: CurrentWeatherDomain = await request.json();
   try {
     const advice = await getLLMAdvice(weather);
     return Response.json({ advice });
