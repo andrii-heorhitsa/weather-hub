@@ -26,7 +26,11 @@ export type WeatherInfo = {
   daily: DailyWeatherItem[];
 };
 
-export type CurrentWeatherDomain = {
-  temperature: number;
-  weatherCode: number;
-};
+export type CurrentWeatherDomain = Pick<
+  CurrentWeather,
+  | "temperature"
+  | "apparentTemperature"
+  | "weatherCode"
+  | "windSpeed"
+  | "precipitation"
+>;

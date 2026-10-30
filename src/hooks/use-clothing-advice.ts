@@ -4,7 +4,14 @@ import type { CurrentWeatherDomain } from "@/types/weather";
 
 export function useClothingAdvice(weather: CurrentWeatherDomain) {
   return useQuery({
-    queryKey: ["clothing-advice", weather.temperature, weather.weatherCode],
+    queryKey: [
+      "clothing-advice",
+      weather.temperature,
+      weather.apparentTemperature,
+      weather.weatherCode,
+      weather.windSpeed,
+      weather.precipitation,
+    ],
     queryFn: () => fetchClothingAdvice(weather),
     retry: false,
     staleTime: 60 * 60 * 1000,
