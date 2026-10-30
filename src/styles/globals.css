@@ -1,10 +1,70 @@
 @import "tailwindcss";
 
+/* Theme: light by default; dark via OS preference unless data-theme="light",
+   or forced with data-theme="dark" (set from the `theme` cookie in layout). */
 :root {
+  color-scheme: light;
   --paper: #ecede9;
   --ink: #1c1b1a;
   --ink-muted: #55564f;
   --hairline: #c7c4bc;
+  --canvas: #fafafa;
+  --surface: #ffffff;
+  --skeleton: #e4e4e7;
+  --danger: #b91c1c;
+
+  --accent-sun: #a8711f;
+  --accent-cloud: #8a8f7d;
+  --accent-overcast: #6b6f76;
+  --accent-fog: #8a9096;
+  --accent-drizzle: #3e7a8c;
+  --accent-rain: #2f6b7a;
+  --accent-snow: #7c93a8;
+  --accent-storm: #4b3f72;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --paper: #161513;
+    --ink: #ece8df;
+    --ink-muted: #9a968c;
+    --hairline: #34322d;
+    --canvas: #121110;
+    --surface: #1b1a17;
+    --skeleton: #2a2925;
+    --danger: #f87171;
+
+    --accent-sun: #e0a84a;
+    --accent-cloud: #a9ae9b;
+    --accent-overcast: #9a9fa6;
+    --accent-fog: #a7adb3;
+    --accent-drizzle: #6fa9ba;
+    --accent-rain: #5c9dad;
+    --accent-snow: #a9bccd;
+    --accent-storm: #8f82bf;
+  }
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --paper: #161513;
+  --ink: #ece8df;
+  --ink-muted: #9a968c;
+  --hairline: #34322d;
+  --canvas: #121110;
+  --surface: #1b1a17;
+  --skeleton: #2a2925;
+  --danger: #f87171;
+
+  --accent-sun: #e0a84a;
+  --accent-cloud: #a9ae9b;
+  --accent-overcast: #9a9fa6;
+  --accent-fog: #a7adb3;
+  --accent-drizzle: #6fa9ba;
+  --accent-rain: #5c9dad;
+  --accent-snow: #a9bccd;
+  --accent-storm: #8f82bf;
 }
 
 @theme inline {
@@ -12,20 +72,22 @@
   --color-ink: var(--ink);
   --color-ink-muted: var(--ink-muted);
   --color-hairline: var(--hairline);
+  --color-canvas: var(--canvas);
+  --color-surface: var(--surface);
+  --color-skeleton: var(--skeleton);
+  --color-danger: var(--danger);
   --font-sans: var(--font-roboto);
   --font-display: var(--font-cormorant);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --paper: #14151a;
-    --ink: #edeae3;
-    --ink-muted: #9b9c97;
-    --hairline: #3a3b42;
-  }
 }
 
 body {
   background: var(--paper);
   color: var(--ink);
+}
+
+@layer base {
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
 }

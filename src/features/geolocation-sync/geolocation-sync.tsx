@@ -24,6 +24,8 @@ export function GeolocationSync() {
       },
       () => {},
     );
+    // Ask for geolocation once on mount, not every time the city changes.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return null;

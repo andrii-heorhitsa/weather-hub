@@ -1,17 +1,11 @@
 import { WeatherWidget } from "@/features/weather-widget/weather-widget";
 import { getCityFromCookie } from "@/lib/get-city-from-cookie";
 import { getQueryClient } from "@/lib/get-query-client";
-import { searchCities } from "@/lib/service/city-service";
 import { getWeather } from "@/lib/service/weather-service";
 import { CityStoreProvider } from "@/providers/city-store-provider";
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 
 export default async function Home() {
-  // const rawWeatherInfo = await getWeather(50.45, 30.52);
-  // console.log(rawWeatherInfo);
-  // const cities = await searchCities("Chernivtsi");
-  // console.log("cities:", cities);
-
   const city = await getCityFromCookie();
   const queryClient = getQueryClient();
 
@@ -23,8 +17,8 @@ export default async function Home() {
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
       <CityStoreProvider initialCity={city}>
-        <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-          <section className="flex flex-1 w-full max-w-3xl flex-col items-center py-20 px-16 bg-white dark:bg-black">
+        <div className="flex flex-col flex-1 items-center justify-center bg-canvas font-sans">
+          <section className="flex flex-1 w-full max-w-3xl flex-col items-center px-4 py-8 sm:px-16 sm:py-20 bg-surface">
             <WeatherWidget />
           </section>
         </div>

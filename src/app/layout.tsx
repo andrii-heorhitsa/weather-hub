@@ -4,6 +4,7 @@ import "@/styles/globals.css";
 import Providers from "@/providers/providers";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
+import { getThemeFromCookie } from "@/lib/get-theme-from-cookie";
 
 const roboto = Roboto({
   weight: ["300", "400", "500", "700"],
@@ -24,15 +25,21 @@ export const metadata: Metadata = {
   description: "Weather Hub App",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const theme = await getThemeFromCookie();
+
   return (
-    <html lang="en" className={`${roboto.className} ${cormorant.variable}`}>
+    <html
+      lang="en"
+      className={`${roboto.className} ${cormorant.variable}`}
+      data-theme={theme === "system" ? undefined : theme}
+    >
       <body className="flex min-h-screen flex-col font-sans">
-        <Header />
+        <Header theme={theme} />
         <Providers>
           <main className="flex flex-1 flex-col">{children}</main>
         </Providers>

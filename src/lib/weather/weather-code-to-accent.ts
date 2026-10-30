@@ -1,34 +1,44 @@
+// CSS variables defined per theme in globals.css
+const SUN = "var(--accent-sun)";
+const CLOUD = "var(--accent-cloud)";
+const OVERCAST = "var(--accent-overcast)";
+const FOG = "var(--accent-fog)";
+const DRIZZLE = "var(--accent-drizzle)";
+const RAIN = "var(--accent-rain)";
+const SNOW = "var(--accent-snow)";
+const STORM = "var(--accent-storm)";
+
 const ACCENT_MAP: Record<number, string> = {
-  0: "#C98A2B",
-  1: "#C98A2B",
-  2: "#8A8F7D",
-  3: "#6B6F76",
-  45: "#8A9096",
-  48: "#8A9096",
-  51: "#3E7A8C",
-  53: "#3E7A8C",
-  55: "#3E7A8C",
-  56: "#3E7A8C",
-  57: "#3E7A8C",
-  61: "#2F6B7A",
-  63: "#2F6B7A",
-  65: "#2F6B7A",
-  66: "#2F6B7A",
-  67: "#2F6B7A",
-  71: "#7C93A8",
-  73: "#7C93A8",
-  75: "#7C93A8",
-  77: "#7C93A8",
-  80: "#2F6B7A",
-  81: "#2F6B7A",
-  82: "#2F6B7A",
-  85: "#7C93A8",
-  86: "#7C93A8",
-  95: "#4B3F72",
-  96: "#4B3F72",
-  99: "#4B3F72",
+  0: SUN,
+  1: SUN,
+  2: CLOUD,
+  3: OVERCAST,
+  45: FOG,
+  48: FOG,
+  51: DRIZZLE,
+  53: DRIZZLE,
+  55: DRIZZLE,
+  56: DRIZZLE,
+  57: DRIZZLE,
+  61: RAIN,
+  63: RAIN,
+  65: RAIN,
+  66: RAIN,
+  67: RAIN,
+  71: SNOW,
+  73: SNOW,
+  75: SNOW,
+  77: SNOW,
+  80: RAIN,
+  81: RAIN,
+  82: RAIN,
+  85: SNOW,
+  86: SNOW,
+  95: STORM,
+  96: STORM,
+  99: STORM,
 };
 
 export function weatherCodeToAccent(code: number): string {
-  return ACCENT_MAP[code] ?? "#6B6F76";
+  return ACCENT_MAP[code] ?? OVERCAST;
 }
