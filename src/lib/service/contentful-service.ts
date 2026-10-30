@@ -43,8 +43,13 @@ function mapHeaderDtoToDomain(dto: HeaderDto): HeaderContent {
 }
 
 export async function getHeaderContent(): Promise<HeaderContent | null> {
-  const items = await fetchContentfulEntries<HeaderDto>("header");
-  return items.length > 0 ? mapHeaderDtoToDomain(items[0]) : null;
+  try {
+    const items = await fetchContentfulEntries<HeaderDto>("header");
+    return items.length > 0 ? mapHeaderDtoToDomain(items[0]) : null;
+  } catch (error) {
+    console.error("Failed to load header content:", error);
+    return null;
+  }
 }
 
 // --- Footer ---
@@ -62,6 +67,11 @@ function mapFooterDtoToDomain(dto: FooterDto): FooterContent {
 }
 
 export async function getFooterContent(): Promise<FooterContent | null> {
-  const items = await fetchContentfulEntries<FooterDto>("footer");
-  return items.length > 0 ? mapFooterDtoToDomain(items[0]) : null;
+  try {
+    const items = await fetchContentfulEntries<FooterDto>("footer");
+    return items.length > 0 ? mapFooterDtoToDomain(items[0]) : null;
+  } catch (error) {
+    console.error("Failed to load footer content:", error);
+    return null;
+  }
 }
