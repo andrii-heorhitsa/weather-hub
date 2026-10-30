@@ -34,3 +34,5 @@ export type CurrentWeatherDomain = Pick<
   | "windSpeed"
   | "precipitation"
 >;
+
+export type ClothingAdviceResponse = { advice: string };

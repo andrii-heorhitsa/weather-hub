@@ -1,4 +1,7 @@
-import type { CurrentWeatherDomain } from "@/types/weather";
+import type {
+  ClothingAdviceResponse,
+  CurrentWeatherDomain,
+} from "@/types/weather";
 
 export async function fetchClothingAdvice(
   weather: CurrentWeatherDomain,
@@ -13,6 +16,6 @@ export async function fetchClothingAdvice(
     throw new Error(`Failed to fetch clothing advice: ${response.status}`);
   }
 
-  const data = await response.json();
+  const data: ClothingAdviceResponse = await response.json();
   return data.advice;
 }
